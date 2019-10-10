@@ -1,6 +1,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const dotenv = require('dotenv');
 
 const slugify = require('slugify');
 
@@ -34,6 +35,9 @@ const replaceTemplate = require('./modules/replaceTemplate');
 
 //////////////////////////////////////
 // SERVER
+
+//Get the environment variable from the file
+dotenv.config({ path: './config.env' });
 
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template-overview.html`,
@@ -97,6 +101,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(8000, '127.0.0.1', () => {
-  console.log('Listening to requests on port 8000');
+server.listen(process.env.PORT, '127.0.0.1', () => {
+  console.log(`Listening to requests on port ${process.env.PORT}`);
 });
